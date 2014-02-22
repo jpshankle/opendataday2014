@@ -1,6 +1,6 @@
 from flask import Flask
 from flask.ext.mongoengine import MongoEngine, MongoEngineSessionInterface
-import pymongo
+from parsers import *
 
 app = Flask(__name__, static_folder='static', static_url_path='')
 
@@ -43,6 +43,17 @@ class Contract(db.Document):
 @app.route('/')
 def index():
     return app.send_static_file('index.html')
+
+@app.route('/api/importAll')
+def importAll():
+    
+
+@app.route('/api/postImport', methods['POST'])
+def postImport(postData):
+    thePost = Contract()
+    for postProperty in postData:
+        thePost[postProperty] postData[postProperty]
+    thePost.save();
 
 if __name__ == "__main__":
     app.run()
