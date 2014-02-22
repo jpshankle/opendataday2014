@@ -11,11 +11,17 @@ app.config["MONGODB_SETTINGS"] = {
 db = MongoEngine(app)
 app.session_interface = MongoEngineSessionInterface(db)
 
+class MapField(db.Document):
+    source_field = db.StringField()
+    dest_field = db.StringField()
+
 class Source(db.Document):
+    url = db.StringField()
     country = db.StringField(required=True)
     region = db.StringField(required=True)
     language = db.StringField(required=True)
     currency = db.StringField(required=True)
+    field_mapping = db.ListField(db.ReferenceField(MapField))
 
 class Contract(db.Document):
     source = db.StringField(required=True)
