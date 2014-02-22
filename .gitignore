@@ -2,3 +2,7 @@
 *.py#
 
 .#home.py
+
+*.sublime-project
+
+*.sublime-workspace
