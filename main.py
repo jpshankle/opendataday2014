@@ -21,7 +21,7 @@ class Source(db.Document):
     region = db.StringField(required=True)
     language = db.StringField(required=True)
     currency = db.StringField(required=True)
-    field_mapping = db.ListField(db.ReferenceField(MapField))
+    field_mappings = db.ListField(db.ReferenceField(MapField))
 
 class Contract(db.Document):
     source = db.StringField(required=True)
