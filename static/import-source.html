@@ -1,0 +1,64 @@
+<a href="/#/">Back To Source List</a>
+<form>
+	<div class="row">
+		<div class="col-md-6">
+			Url
+		</div>
+			<div class="col-md-6">
+			<input type="text" ng-model="importSource.url" class="form-control">
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-6">
+			Country
+		</div>
+			<div class="col-md-6">
+			<input type="text" ng-model="importSource.country" class="form-control">
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-6">
+			Region
+		</div>
+			<div class="col-md-6">
+				<input type="text" ng-model="importSource.region" class="form-control">
+			</div>
+	</div>
+	<div class="row">
+		<div class="col-md-6">
+			Language
+		</div>
+			<div class="col-md-6">
+			<input type="text" ng-model="importSource.language" class="form-control">
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-6">
+			Currency
+		</div>
+		<div class="col-md-6">
+			<input type="text" ng-model="importSource.currency" class="form-control">
+		</div>
+	</div>
+  <div class="row" ng-repeat="one in importSource.field_mappings">
+    <div class="col-md-6">
+        {{one.dest_field}}
+    </div>
+  	<div class="col-md-6">
+    	<input type="text" ng-model="one.source_field" class="form-control">
+    </div>
+  </div>
+  <div class="row">
+  	<div class="col-md-6">
+	  <select ng-model="selectedFieldMapping" ng-options="item for item in possibleMappings" class="form-control"></select>
+	</div>
+  	<div class="col-md-6">
+	  <button ng-click="addMapping(selectedFieldMapping)" class="btn btn-default">Add Field Mapping</button> 
+	</div>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+       <button ng-click="saveSource()" class="btn btn-default">Save Import Source</button>
+    </div>
+</div>
+</form>

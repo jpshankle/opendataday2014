@@ -1,12 +1,15 @@
-from flask import Flask
+from flask import Flask, jsonify, request
 from flask.ext.mongoengine import MongoEngine, MongoEngineSessionInterface
 from parsers import *
+import json
 
 app = Flask(__name__, static_folder='static', static_url_path='')
 
 app.config["MONGODB_SETTINGS"] = {
     'DB': 'stop_corruption'
 }
+
+app.debug = True;
 
 db = MongoEngine(app)
 app.session_interface = MongoEngineSessionInterface(db)
@@ -24,8 +27,8 @@ class Source(db.Document):
     field_mappings = db.ListField(db.ReferenceField(MapField))
 
 class Contract(db.Document):
-    source = db.StringField(required=True)
-    project_name = db.StringField(required=True)
+    source = db.StringField()
+    project_name = db.StringField()
     description = db.StringField()
     procument_method = db.StringField()
     procument_category = db.StringField()
@@ -44,16 +47,24 @@ class Contract(db.Document):
 def index():
     return app.send_static_file('index.html')
 
-@app.route('/api/importAll')
-def importAll():
-    
+@app.route('/api/import', methods=['POST'])
+def postImport():
+	return json.dumps([{path:request.form}])
+  #   thePost = Contract()
+  #   for postProperty in postData:
+		# thePost[postProperty] = postData[postProperty]
+  #   thePost.save();
 
-@app.route('/api/postImport', methods['POST'])
-def postImport(postData):
-    thePost = Contract()
-    for postProperty in postData:
-        thePost[postProperty] postData[postProperty]
-    thePost.save();
+@app.route('/api/source', methods=['POST', 'GET'])
+def sourceApi():
+	if request.method == 'POST':
+		return jsonify(path=request.form)
+	else:
+		return json.dumps([
+			{
+				"path":request.form
+			}
+		])
 
 if __name__ == "__main__":
     app.run()
