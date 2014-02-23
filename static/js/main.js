@@ -57,6 +57,11 @@ app.controller('ImportSourceCtrl', ['$scope', 'SourceResource', '$routeParams', 
         });
     };
 
+    $scope.possibleSourceTypes = [
+        'json',
+        'worldbank_json'
+    ];
+
     $scope.possibleMappings = [
         'source',
         'project_name',

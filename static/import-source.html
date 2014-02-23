@@ -1,5 +1,12 @@
 <a href="/#/">Back To Source List</a>
 <form>
+    <div class="row">
+        <div class="col-md-6">
+            Source Type
+        </div>
+        <div class="col-md-6">
+            <select ng-model="importSource.source_type" ng-options="item for item in possibleSourceTypes" class="form-control"></select>
+        </div>
 	<div class="row">
 		<div class="col-md-6">
 			Url

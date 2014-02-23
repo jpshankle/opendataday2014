@@ -47,24 +47,28 @@ class Contract(db.Document):
 def index():
     return app.send_static_file('index.html')
 
+@app.route('/api/contracts')
+def contractsRoute():
+	return json.dumps(list(Contract.objects))
+
 @app.route('/api/import', methods=['POST'])
 def postImport():
-	return json.dumps([{path:request.form}])
   #   thePost = Contract()
   #   for postProperty in postData:
 		# thePost[postProperty] = postData[postProperty]
   #   thePost.save();
+  return json.dumps([{"message":'success'}])
 
 @app.route('/api/source', methods=['POST', 'GET'])
 def sourceApi():
 	if request.method == 'POST':
 		return jsonify(path=request.form)
 	else:
-		return json.dumps([
-			{
-				"path":request.form
-			}
-		])
+		return json.dumps(list(Source.objects))
+
+@app.route('/api/source/<source_id>')
+def individualSource(source_id):
+	return json.dumps(list(Source.objects(id=source_id)))
 
 if __name__ == "__main__":
     app.run()
