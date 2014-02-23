@@ -48,7 +48,9 @@ def main():
     for line in parsed:
     	print row
     	if (row >= row_to_skip):
-    		print line
+			print line
+			for x in range(0, columns):
+				print x
     	row += 1
 
 if __name__ == "__main__":
