@@ -1,4 +1,4 @@
-<a ng-click="importButton()" href="">Import All To Database</a> | <a href="/#/add">Add New</a>
+<a ng-click="importButton()" href="">Import All To Database</a> | <a href="/#/source/add">Add New</a>
 <table class="table">
     <thead>
       <tr>
@@ -7,7 +7,7 @@
     </thead>
     <tbody>
       <tr ng-repeat="source in importSources">
-        <td><a href="import-sources/{{_id}}">{{name}}</a></td>
+        <td><a href="/#/source/{{source.id}}">{{source.name}}</a></td>
       </tr>
     </tbody>
 </table>

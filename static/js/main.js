@@ -6,7 +6,7 @@ app.config(['$routeProvider', function ($routeProvider) {
 			controller: 'HomeCtrl',
 			templateUrl: 'home.html'
 		})
-        .when('/:importSource', {
+        .when('/source/:source', {
             controller: 'ImportSourceCtrl',
             templateUrl: 'import-source.html'
 		})
@@ -20,7 +20,11 @@ app.factory('SourceResource', ['$resource', function ($resource) {
 }]);
 
 app.controller('HomeCtrl', ['$scope', '$http', '$resource', 'SourceResource', function ($scope, $http, $resource, SourceResource) {
-    $scope.importSources = SourceResource.query();
+    $scope.importSources = SourceResource.query(function () {
+        $scope.importSources.forEach(function(i) {
+            i.id = i._id.$oid;
+        });
+    });
     $scope.importButton = function() {
 		$http.post('/api/import', { things: 'all' })
 			.success(function () {
@@ -30,9 +34,11 @@ app.controller('HomeCtrl', ['$scope', '$http', '$resource', 'SourceResource', fu
 }]);
 
 app.controller('ImportSourceCtrl', ['$scope', 'SourceResource', '$routeParams', '$location', function ($scope, SourceResource, $routeParams, $location) {
-	if ($routeParams.importSource === 'add') {
+	if ($routeParams.source === 'add') {
 		$scope.importSource = new SourceResource({
 			field_mappings: [],
+            source_type: '',
+            name: '',
 			url: '',
             country: '',
             region: '',
@@ -40,8 +46,8 @@ app.controller('ImportSourceCtrl', ['$scope', 'SourceResource', '$routeParams', 
             currency: ''
 		});
 	} else {
-		$scope.importSource = SourceResource.get('/api/import-sources/' + {
-			importSource: $routeParams.importSource
+		$scope.importSource = SourceResource.get({
+			importSource: $routeParams.source
 		});
 	}
 	$scope.addMapping = function (selectedMapping) {
@@ -52,7 +58,6 @@ app.controller('ImportSourceCtrl', ['$scope', 'SourceResource', '$routeParams', 
     };
     $scope.saveSource = function () {
         $scope.importSource.$save(function () {
-            console.log(arguments);
             $location.path('/');
         });
     };
